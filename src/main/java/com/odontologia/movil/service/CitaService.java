@@ -19,4 +19,10 @@ public interface CitaService {
 
     List<Cita> findByOdontologoId(Integer odontologoId);
 
+	List<Cita> getAllCitas();
+
+	Optional<Cita> getCitaById(Integer id);
+
+	void deleteCita(Integer id);
+
 }
