@@ -15,30 +15,39 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EspecialidadServiceImplement implements EspecialidadService {
 
-    private final EspecialidadRepository especialidadRepository;
+	private final EspecialidadRepository especialidadRepository;
 
     @Autowired
     public EspecialidadServiceImplement(EspecialidadRepository especialidadRepository) {
         this.especialidadRepository = especialidadRepository;
     }
 
-    @Transactional(readOnly = true)
+    @Override
     public List<Especialidad> findAll() {
         return especialidadRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Especialidad> findById(Integer id) {
-        return especialidadRepository.findById(id);
+    @Override
+    public Especialidad findById(Integer id) {
+        return especialidadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialidad no encontrada con ID: " + id));
     }
 
-    @Transactional
+    @Override
     public Especialidad save(Especialidad especialidad) {
         return especialidadRepository.save(especialidad);
     }
 
-    @Transactional
-    public void deleteById(Integer id) {
-        especialidadRepository.deleteById(id);
+    @Override
+    public Especialidad update(Integer id, Especialidad especialidadDetails) {
+        Especialidad especialidad = findById(id);
+        especialidad.setDescripcion(especialidadDetails.getDescripcion());
+        return especialidadRepository.save(especialidad);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Especialidad especialidad = findById(id);
+        especialidadRepository.delete(especialidad);
     }
 }
