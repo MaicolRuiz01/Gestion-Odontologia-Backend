@@ -29,6 +29,8 @@ public class Persona {
     private String nombre;
     private String cedula;
 	private Date fechaNacimiento; 
+	private String gmail;
+	private String direccion;
     
 	
 	  @ManyToOne

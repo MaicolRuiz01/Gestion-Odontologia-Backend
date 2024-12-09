@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.odontologia.movil.repository.PersonaRepository;
 import com.odontologia.movil.service.PersonaService;
+import com.odontologia.movil.dto.PersonaDTO;
 import com.odontologia.movil.entidades.Persona;
+import java.util.stream.Collectors;
+
 
 @Service
 public class PersonaServiceImplement implements PersonaService{
@@ -44,5 +47,25 @@ public class PersonaServiceImplement implements PersonaService{
     public void deleteById(Integer id) {
         personaRepository.deleteById(id);
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Persona> findAllByTipoPersonaId(Integer tipoId) {
+        return personaRepository.findAllByTipoPersonaId(tipoId);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<PersonaDTO> findAllByTipoPersonaIdDTO(Integer tipoId) {
+        return personaRepository.findAllByTipoPersonaId(tipoId).stream()
+                .map(persona -> new PersonaDTO(
+                		
+                        persona.getNombre(),
+                        persona.getCedula(),
+                        persona.getFechaNacimiento())) // Aquí se usa el constructor.
+                .collect(Collectors.toList());
+    }
+
+
 
 }

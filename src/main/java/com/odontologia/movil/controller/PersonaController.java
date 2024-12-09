@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.odontologia.movil.dto.PersonaDTO;
 import com.odontologia.movil.entidades.Persona;
 import com.odontologia.movil.service.PersonaService;
 
@@ -68,6 +69,21 @@ public class PersonaController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+ // Endpoint para obtener todos los odontólogos
+    @GetMapping("/odontologos")
+    public ResponseEntity<List<PersonaDTO>> getAllOdontologos() {
+        List<PersonaDTO> odontologos = personaService.findAllByTipoPersonaIdDTO(1); // Asumiendo que 1 es el ID para odontólogos
+        return new ResponseEntity<>(odontologos, HttpStatus.OK);
+    }
+
+    // Endpoint para obtener todos los pacientes
+ // Endpoint para obtener todos los pacientes
+    @GetMapping("/pacientes")
+    public ResponseEntity<List<PersonaDTO>> getAllPacientes() {
+        List<PersonaDTO> pacientes = personaService.findAllByTipoPersonaIdDTO(2); // ID para pacientes
+        return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
 }
