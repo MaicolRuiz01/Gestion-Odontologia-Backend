@@ -3,6 +3,7 @@ package com.odontologia.movil.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.odontologia.movil.dto.CitaDTO;
 import com.odontologia.movil.entidades.Cita;
 
 public interface CitaService {
@@ -24,5 +25,7 @@ public interface CitaService {
 	Optional<Cita> getCitaById(Integer id);
 
 	void deleteCita(Integer id);
+
+	List<CitaDTO> getAllCitasDTO();
 
 }

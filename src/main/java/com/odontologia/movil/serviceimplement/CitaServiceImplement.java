@@ -82,8 +82,10 @@ public class CitaServiceImplement implements CitaService{
 	@Transactional(readOnly = true)
 	public List<CitaDTO> getAllCitasDTO() {
 	    return citaRepository.findAll().stream().map(cita -> {
-	        // Calcular edad del paciente
-	        int pacienteEdad = new Date().getYear() - cita.getPaciente().getFechaNacimiento().getYear();
+	        // Verificar si el campo fechaNacimiento es nulo
+	        int pacienteEdad = (cita.getPaciente().getFechaNacimiento() != null)
+	                ? new Date().getYear() - cita.getPaciente().getFechaNacimiento().getYear()
+	                : 0; // Edad predeterminada si fechaNacimiento es nula
 
 	        // Calcular días restantes para la cita
 	        long diasRestantes = (cita.getFecha().getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
