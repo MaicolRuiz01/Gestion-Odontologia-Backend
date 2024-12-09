@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.odontologia.movil.dto.CitaDTO;
 import com.odontologia.movil.entidades.Cita;
 import com.odontologia.movil.repository.CitaRepository;
 import com.odontologia.movil.service.CitaService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CitaServiceImplement implements CitaService{
@@ -74,4 +77,31 @@ public class CitaServiceImplement implements CitaService{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CitaDTO> getAllCitasDTO() {
+	    return citaRepository.findAll().stream().map(cita -> {
+	        // Calcular edad del paciente
+	        int pacienteEdad = new Date().getYear() - cita.getPaciente().getFechaNacimiento().getYear();
+
+	        // Calcular días restantes para la cita
+	        long diasRestantes = (cita.getFecha().getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+
+	        // Crear y devolver el DTO
+	        return new CitaDTO(
+	                cita.getPaciente().getNombre(),
+	                pacienteEdad,
+	                cita.getOdontologo().getNombre(),
+	                cita.getOdontologo().getEspecialidad() != null ? cita.getOdontologo().getEspecialidad().getDescripcion() : "Sin especialidad",
+	                cita.getTratamiento(),
+	                cita.getDescripcion(),
+	                cita.getFecha(),
+	                diasRestantes,
+	                cita.getValor(),
+	                cita.getPagado()
+	        );
+	    }).collect(Collectors.toList());
+	}
+
 }

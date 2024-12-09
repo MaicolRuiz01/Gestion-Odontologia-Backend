@@ -1,5 +1,6 @@
 package com.odontologia.movil.controller;
 
+import com.odontologia.movil.dto.CitaDTO;
 import com.odontologia.movil.entidades.Cita;
 import com.odontologia.movil.service.CitaService;
 
@@ -24,11 +25,10 @@ public class CitaController {
 
     // Obtener todas las citas
     @GetMapping
-    public ResponseEntity<List<Cita>> getAllCitas() {
-        List<Cita> citas = citaService.findAll();
+    public ResponseEntity<List<CitaDTO>> getAllCitas() {
+        List<CitaDTO> citas = citaService.getAllCitasDTO();
         return new ResponseEntity<>(citas, HttpStatus.OK);
     }
-
     // Obtener una cita por ID
     @GetMapping("/{id}")
     public ResponseEntity<Cita> getCitaById(@PathVariable Integer id) {
