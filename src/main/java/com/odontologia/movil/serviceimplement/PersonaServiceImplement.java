@@ -59,10 +59,10 @@ public class PersonaServiceImplement implements PersonaService{
     public List<PersonaDTO> findAllByTipoPersonaIdDTO(Integer tipoId) {
         return personaRepository.findAllByTipoPersonaId(tipoId).stream()
                 .map(persona -> new PersonaDTO(
-                		
+                		persona.getId(),
                         persona.getNombre(),
                         persona.getCedula(),
-                        persona.getFechaNacimiento())) // Aquí se usa el constructor.
+                        persona.getFechaNacimiento(), null)) // Aquí se usa el constructor.
                 .collect(Collectors.toList());
     }
 

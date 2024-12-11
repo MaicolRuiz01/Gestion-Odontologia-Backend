@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonaDTO {
-	
+	private Integer id;
 	private String nombre;
     private String cedula;
     private Date fechaNacimiento;

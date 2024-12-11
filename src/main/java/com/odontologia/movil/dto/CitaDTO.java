@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CitaDTO {
-	
+	private Integer id;
 	private String pacienteNombre;
     private int pacienteEdad;
     private String odontologoNombre;

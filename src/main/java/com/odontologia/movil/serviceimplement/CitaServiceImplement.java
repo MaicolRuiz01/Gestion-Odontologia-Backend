@@ -92,6 +92,7 @@ public class CitaServiceImplement implements CitaService{
 
 	        // Crear y devolver el DTO
 	        return new CitaDTO(
+	        		cita.getId(),
 	                cita.getPaciente().getNombre(),
 	                pacienteEdad,
 	                cita.getOdontologo().getNombre(),
